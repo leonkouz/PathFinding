@@ -19,9 +19,25 @@ namespace PathFinding
     /// </summary>
     public partial class MainWindow : Window
     {
+        private ApplicationViewModel viewModel = new ApplicationViewModel();
+
         public MainWindow()
         {
+            this.DataContext = viewModel;
+
             InitializeComponent();
+
+        }
+
+        private void node_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if(sender != null)
+            {
+                Node node = (sender as NodeControl).Node;
+                node.Colour = Brushes.White;
+
+                Grid.Items.Refresh();
+            }
         }
     }
 }
