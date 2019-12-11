@@ -12,6 +12,16 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
+
+/// <summary>
+/// TODO:
+/// 
+/// Dijkstra's using min-priority queue
+/// Dijkstra's using Fibonacci heap to optimise 
+/// 
+/// </summary>
+
+
 namespace PathFinding
 {
     /// <summary>

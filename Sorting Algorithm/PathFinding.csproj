@@ -80,6 +80,15 @@
     <Compile Include="NodeControl.xaml.cs">
       <DependentUpon>NodeControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="PriorityQueues\FastPriorityQueue.cs" />
+    <Compile Include="PriorityQueues\FastPriorityQueueNode.cs" />
+    <Compile Include="PriorityQueues\GenericPriorityQueue.cs" />
+    <Compile Include="PriorityQueues\GenericPriorityQueueNode.cs" />
+    <Compile Include="PriorityQueues\IFixedSizePriorityQueue.cs" />
+    <Compile Include="PriorityQueues\IPriorityQueue.cs" />
+    <Compile Include="PriorityQueues\SimplePriorityQueue.cs" />
+    <Compile Include="PriorityQueues\StablePriorityQueue.cs" />
+    <Compile Include="PriorityQueues\StablePriorityQueueNode.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>

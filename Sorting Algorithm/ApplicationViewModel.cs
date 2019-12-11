@@ -17,7 +17,7 @@ namespace PathFinding
 
         public ApplicationViewModel()
         {
-            grid = new Grid(10, 10);
+            grid = new Grid(100, 100);
         }
 
         public void SelectNode(Node node)
