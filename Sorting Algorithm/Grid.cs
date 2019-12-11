@@ -15,7 +15,6 @@ namespace PathFinding
         public int Height { get; private set; }
 
         public Node[,] Nodes { get; private set; }
-        public object FIle { get; private set; }
 
         public Grid(int x, int y)
         {
@@ -79,11 +78,6 @@ namespace PathFinding
                 }
             }
 
-        }
-
-        public void SelectNode(int x, int y)
-        {
-            Nodes[x, y].Colour = Brushes.Black;
         }
 
         public List<Node> DijkstrasAlgorithm(Node start, Node end)

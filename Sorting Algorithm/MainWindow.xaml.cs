@@ -32,21 +32,14 @@ namespace PathFinding
     {
         private ApplicationViewModel viewModel = new ApplicationViewModel();
 
+        private bool isStartNodeSelecting = false;
+        private bool isEndNodeSelecting = false;
+
         public MainWindow()
         {
             this.DataContext = viewModel;
 
             InitializeComponent();
-
-        }
-
-        private void node_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            if(sender != null)
-            {
-                Node node = (sender as NodeControl).Node;
-                node.Colour = Brushes.White;
-            }
         }
 
         private void Node_MouseRightButtonDown(object sender, MouseButtonEventArgs e)
@@ -55,6 +48,57 @@ namespace PathFinding
             {
                 viewModel.RunDijkstra();
             });
+        }
+
+        private void Grid_Loaded(object sender, RoutedEventArgs e)
+        {
+            Grid.Items.Refresh();
+        }
+
+        private void SelectStartNodeButton_Click(object sender, RoutedEventArgs e)
+        {
+            if(isEndNodeSelecting == false)
+            {
+                isStartNodeSelecting = true;
+                selectStartNodeButton.IsEnabled = false;
+            }
+        }
+
+        private void SelectEndNodeButton_Click(object sender, RoutedEventArgs e)
+        {
+            if(isStartNodeSelecting == false)
+            {
+                isEndNodeSelecting = true;
+                selectEndNodeButton.IsEnabled = false;
+            }
+        }
+
+        private void RunDijkstraButton_Click(object sender, RoutedEventArgs e)
+        {
+            viewModel.RunDijkstra();
+        }
+
+        private void Node_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if(isEndNodeSelecting == true)
+            {
+                Node node = (sender as NodeControl).Node;
+
+                isEndNodeSelecting = false;
+                selectEndNodeButton.IsEnabled = true;
+                viewModel.SelectEndNode(node);
+                node.Colour = Brushes.Yellow;
+            }
+
+            if(isStartNodeSelecting == true)
+            {
+                Node node = (sender as NodeControl).Node;
+
+                isStartNodeSelecting = false;
+                selectStartNodeButton.IsEnabled = true;
+                viewModel.SelectStartNode(node);
+                node.Colour = Brushes.Blue;
+            }
         }
     }
 }

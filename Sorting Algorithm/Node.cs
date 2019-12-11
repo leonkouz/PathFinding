@@ -9,7 +9,7 @@ namespace PathFinding
 {
     public class Node : OnPropertyChangedBehaviour
     {
-        private Brush colour = Brushes.Blue;
+        private Brush colour = Brushes.Khaki;
 
         public int X { get; private set; }
 
