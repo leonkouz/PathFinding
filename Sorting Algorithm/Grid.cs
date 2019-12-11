@@ -52,9 +52,25 @@ namespace PathFinding
                     {
                         node.SetEastNeighhbour(Nodes[i + 1, j]);
                     }
+                    if (i + 1 < x && j - 1 >= 0)
+                    {
+                        node.SetNorthEastNeighbour(Nodes[i + 1, j - 1]);
+                    }
+                    if(i - 1 >= 0 && j - 1 >= 0)
+                    {
+                        node.SetNorthWestNeighbour(Nodes[i - 1, j - 1]);
+                    }
                     if (j - 1 >= 0)
                     {
                         node.SetNorthNeighhbour(Nodes[i, j - 1]);
+                    }
+                    if(i + 1 < x && j + 1 < y)
+                    {
+                        node.SetSouthEastNeighbour(Nodes[i + 1, j + 1]);
+                    }
+                    if(i - 1 >= 0 && j + 1 < y)
+                    {
+                        node.SetSouthWestNeighbour(Nodes[i - 1, j + 1]);
                     }
                     if (j + 1 < y)
                     {
@@ -120,7 +136,7 @@ namespace PathFinding
 
                         visited.Add(neighbour);
 
-                        if(neighbour == end)
+                        if (neighbour == end)
                         {
                             priorityQueue.Clear();
                             break;

@@ -27,13 +27,21 @@ namespace PathFinding
 
         public List<Node> Neighbours => GetNeighbours();
 
+        public Node NorthWestNeighbour { get; private set; }
+
         public Node NorthNeightbour { get; private set; }
+
+        public Node NorthEastNeighbour { get; private set; }
 
         public Node EastNeightbour { get; private set; }
 
-        public Node WestNeightbour { get; private set; }
+        public Node SouthEastNeighbour { get; private set; }
 
         public Node SouthNeightbour { get; private set; }
+
+        public Node SouthWestNeighbour { get; private set; }
+
+        public Node WestNeightbour { get; private set; }
 
         public Node(int x, int y)
         {
@@ -41,14 +49,34 @@ namespace PathFinding
             Y = y;
         }
 
+        public void SetNorthWestNeighbour(Node node)
+        {
+            NorthWestNeighbour = node;
+        }
+
         public void SetNorthNeighhbour(Node node)
         {
             NorthNeightbour = node;
         }
 
+        public void SetNorthEastNeighbour(Node node)
+        {
+            NorthEastNeighbour = node;
+        }
+
         public void SetEastNeighhbour(Node node)
         {
             EastNeightbour = node;
+        }
+
+        public void SetSouthEastNeighbour(Node node)
+        {
+            SouthEastNeighbour = node;
+        }
+
+        public void SetSouthWestNeighbour(Node node)
+        {
+            SouthWestNeighbour = node;
         }
 
         public void SetWestNeighhbour(Node node)
@@ -69,6 +97,14 @@ namespace PathFinding
             {
                 connectedNodes.Add(NorthNeightbour);
             }
+            if (NorthEastNeighbour != null)
+            {
+                connectedNodes.Add(NorthEastNeighbour);
+            }
+            if (NorthWestNeighbour != null)
+            {
+                connectedNodes.Add(NorthWestNeighbour);
+            }
             if (EastNeightbour != null)
             {
                 connectedNodes.Add(EastNeightbour);
@@ -80,6 +116,14 @@ namespace PathFinding
             if (SouthNeightbour != null)
             {
                 connectedNodes.Add(SouthNeightbour);
+            }
+            if (SouthWestNeighbour != null)
+            {
+                connectedNodes.Add(SouthWestNeighbour);
+            }
+            if (SouthEastNeighbour != null)
+            {
+                connectedNodes.Add(SouthEastNeighbour);
             }
 
             return connectedNodes;
