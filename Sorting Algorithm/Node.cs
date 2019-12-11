@@ -7,13 +7,23 @@ using System.Windows.Media;
 
 namespace PathFinding
 {
-    public class Node
+    public class Node : OnPropertyChangedBehaviour
     {
+        private Brush colour = Brushes.Blue;
+
         public int X { get; private set; }
 
         public int Y { get; private set; }
 
-        public Brush Colour { get; set; } = Brushes.Blue;
+        public Brush Colour
+        {
+            get => colour;
+            set
+            {
+                colour = value;
+                OnPropertyChanged(nameof(Colour));
+            }
+        }
 
         public List<Node> Neighbours => GetNeighbours();
 
@@ -55,19 +65,19 @@ namespace PathFinding
         {
             List<Node> connectedNodes = new List<Node>();
 
-            if(NorthNeightbour != null)
+            if (NorthNeightbour != null)
             {
                 connectedNodes.Add(NorthNeightbour);
             }
-            if(EastNeightbour != null)
+            if (EastNeightbour != null)
             {
                 connectedNodes.Add(EastNeightbour);
             }
-            if(WestNeightbour != null)
+            if (WestNeightbour != null)
             {
                 connectedNodes.Add(WestNeightbour);
             }
-            if(SouthNeightbour != null)
+            if (SouthNeightbour != null)
             {
                 connectedNodes.Add(SouthNeightbour);
             }

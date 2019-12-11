@@ -23,5 +23,10 @@ namespace PathFinding
         public void SelectNode(Node node)
         {
         }
+
+        public void RunDijkstra()
+        {
+            grid.DijkstrasAlgorithm(grid.Nodes[51, 51], grid.Nodes[56, 56]);
+        }
     }
 }

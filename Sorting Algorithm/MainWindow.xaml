@@ -25,6 +25,7 @@
                                    BorderBrush="Black"
                                    BorderThickness="1 1 0 0"
                                    MouseDown="node_MouseDown"
+                                   MouseRightButtonDown="Node_MouseRightButtonDown"
                                    Node="{Binding}"
                                    />
             </DataTemplate>

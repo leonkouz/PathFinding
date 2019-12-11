@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -45,9 +46,15 @@ namespace PathFinding
             {
                 Node node = (sender as NodeControl).Node;
                 node.Colour = Brushes.White;
-
-                Grid.Items.Refresh();
             }
+        }
+
+        private void Node_MouseRightButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            Task.Run(() =>
+            {
+                viewModel.RunDijkstra();
+            });
         }
     }
 }

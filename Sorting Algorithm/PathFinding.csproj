@@ -80,6 +80,7 @@
     <Compile Include="NodeControl.xaml.cs">
       <DependentUpon>NodeControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="OnPropertyChangedBehaviour.cs" />
     <Compile Include="PriorityQueues\FastPriorityQueue.cs" />
     <Compile Include="PriorityQueues\FastPriorityQueueNode.cs" />
     <Compile Include="PriorityQueues\GenericPriorityQueue.cs" />

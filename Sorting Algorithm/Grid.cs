@@ -63,12 +63,6 @@ namespace PathFinding
                 }
             }
 
-            List<Node> shortestPath = DijkstrasAlgorithm(Nodes[87, 1], Nodes[1, 92]);
-
-            foreach(Node node in shortestPath)
-            {
-                node.Colour = Brushes.Black;
-            }
         }
 
         public void SelectNode(int x, int y)
@@ -100,6 +94,11 @@ namespace PathFinding
 
                 foreach (Node neighbour in newSmallest.Neighbours)
                 {
+                    App.Current.Dispatcher.Invoke(() =>
+                    {
+                        neighbour.Colour = Brushes.Green;
+                    });
+
                     if (!visited.Contains(neighbour))
                     {
                         int altPath = totalCosts[newSmallest] + 1; // Cost is always 1.
@@ -120,6 +119,12 @@ namespace PathFinding
                         }
 
                         visited.Add(neighbour);
+
+                        if(neighbour == end)
+                        {
+                            priorityQueue.Clear();
+                            break;
+                        }
                     }
                 }
             }
@@ -129,24 +134,15 @@ namespace PathFinding
 
             while (curr != start)
             {
-                List<KeyValuePair<Node, Node>> neighbours = prevNodes.Where(x => x.Key.X == curr.X && x.Key.Y == curr.Y).ToList();
+                Node neighbour = prevNodes.Where(x => x.Key.X == curr.X && x.Key.Y == curr.Y).First().Value;
 
-                int lowestCost = int.MaxValue;
-                Node lowestCostNode = null;
-
-                foreach(var pair in neighbours)
+                App.Current.Dispatcher.Invoke(() =>
                 {
-                    Node newNode = pair.Value;
+                    neighbour.Colour = Brushes.Black;
+                });
 
-                    if(totalCosts[newNode] < lowestCost)
-                    {
-                        lowestCost = totalCosts[newNode];
-                        lowestCostNode = newNode;
-                    }
-                }
-
-                shortestPath.Add(lowestCostNode);
-                curr = lowestCostNode;
+                shortestPath.Add(neighbour);
+                curr = neighbour;
             }
 
             return shortestPath;
