@@ -22,7 +22,7 @@ namespace PathFinding
 
         public ApplicationViewModel()
         {
-            grid = new Grid(10, 10);
+            grid = new Grid(25, 25);
         }
 
         public void SelectStartNode(Node node)
@@ -43,6 +43,11 @@ namespace PathFinding
             }
 
             EndNode = node;
+        }
+
+        public void MakeWall(Node node)
+        {
+            grid.MakeWall(node);
         }
 
         public void RunDijkstra()

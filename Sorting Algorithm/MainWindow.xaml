@@ -34,7 +34,14 @@
                         Height="50"
                         Name="runDijkstraButton"
                         Click="RunDijkstraButton_Click"
-                        /> 
+                        />
+
+                <Button Content="Make Wall"
+                        Margin="20 0 0 0"
+                        Width="150"
+                        Height="50"
+                        Name="makeWallButton"
+                        Click="MakeWallButton_Click"/>
 
             </StackPanel>
 

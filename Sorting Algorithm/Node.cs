@@ -27,6 +27,8 @@ namespace PathFinding
 
         public List<Node> Neighbours => GetNeighbours();
 
+        public bool IsWall { get; private set; } = false;
+
         public Node NorthWestNeighbour { get; private set; }
 
         public Node NorthNeightbour { get; private set; }
@@ -47,6 +49,39 @@ namespace PathFinding
         {
             X = x;
             Y = y;
+        }
+
+        /// <summary>
+        /// Indicates if the node has two walls that are
+        /// adjacent to itself. This is used to determine
+        /// if the node can be walked on when a diagonal wall
+        /// is placed next to it.
+        /// </summary>
+        /// <returns></returns>
+        public bool IsSurroundedByDiagonalWall()
+        {
+            if(NorthNeightbour != null && NorthNeightbour.IsWall && 
+                WestNeightbour!= null && WestNeightbour.IsWall)
+            {
+                return true;
+            }
+            if (NorthNeightbour != null && NorthNeightbour.IsWall &&
+                EastNeightbour != null && EastNeightbour.IsWall)
+            {
+                return true;
+            }
+            if(SouthNeightbour != null && SouthNeightbour.IsWall && 
+                EastNeightbour != null &&  EastNeightbour.IsWall)
+            {
+                return true;
+            }
+            if (SouthNeightbour != null && SouthNeightbour.IsWall &&
+                WestNeightbour != null && WestNeightbour.IsWall)
+            {
+                return true;
+            }
+
+            return false;
         }
 
         public void SetNorthWestNeighbour(Node node)
@@ -87,6 +122,21 @@ namespace PathFinding
         public void SetSouthNeighhbour(Node node)
         {
             SouthNeightbour = node;
+        }
+
+        public void MakeWall()
+        {
+            Colour = Brushes.Black;
+            IsWall = true;
+
+            NorthNeightbour = null;
+            NorthEastNeighbour = null;
+            NorthWestNeighbour = null;
+            EastNeightbour = null;
+            WestNeightbour = null;
+            SouthNeightbour = null;
+            SouthEastNeighbour = null;
+            SouthWestNeighbour = null;
         }
 
         private List<Node> GetNeighbours()

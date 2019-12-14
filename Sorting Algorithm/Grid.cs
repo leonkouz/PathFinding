@@ -80,6 +80,11 @@ namespace PathFinding
 
         }
 
+        public void MakeWall(Node node)
+        {
+            node.MakeWall();
+        }
+
         public List<Node> DijkstrasAlgorithm(Node start, Node end)
         {
             Dictionary<Node, int> totalCosts = new Dictionary<Node, int>();
@@ -104,6 +109,11 @@ namespace PathFinding
 
                 foreach (Node neighbour in newSmallest.Neighbours)
                 {
+                    if(neighbour.IsWall == true || neighbour.IsSurroundedByDiagonalWall())
+                    {
+                        continue;
+                    }
+
                     App.Current.Dispatcher.Invoke(() =>
                     {
                         neighbour.Colour = Brushes.Green;
@@ -148,7 +158,7 @@ namespace PathFinding
 
                 App.Current.Dispatcher.Invoke(() =>
                 {
-                    neighbour.Colour = Brushes.Black;
+                    neighbour.Colour = Brushes.Pink;
                 });
 
                 shortestPath.Add(neighbour);
