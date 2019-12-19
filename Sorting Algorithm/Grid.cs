@@ -27,7 +27,8 @@ namespace PathFinding
 
         private void SetupGrid(int x, int y)
         {
-            for (int i = 0; i < x; i++)
+
+            Parallel.For(0, x, i =>
             {
                 for (int j = 0; j < y; j++)
                 {
@@ -35,9 +36,9 @@ namespace PathFinding
 
                     Nodes[i, j] = node;
                 }
-            }
+            });
 
-            for (int i = 0; i < x; i++)
+            Parallel.For(0, x, i =>
             {
                 for (int j = 0; j < y; j++)
                 {
@@ -55,7 +56,7 @@ namespace PathFinding
                     {
                         node.SetNorthEastNeighbour(Nodes[i + 1, j - 1]);
                     }
-                    if(i - 1 >= 0 && j - 1 >= 0)
+                    if (i - 1 >= 0 && j - 1 >= 0)
                     {
                         node.SetNorthWestNeighbour(Nodes[i - 1, j - 1]);
                     }
@@ -63,11 +64,11 @@ namespace PathFinding
                     {
                         node.SetNorthNeighhbour(Nodes[i, j - 1]);
                     }
-                    if(i + 1 < x && j + 1 < y)
+                    if (i + 1 < x && j + 1 < y)
                     {
                         node.SetSouthEastNeighbour(Nodes[i + 1, j + 1]);
                     }
-                    if(i - 1 >= 0 && j + 1 < y)
+                    if (i - 1 >= 0 && j + 1 < y)
                     {
                         node.SetSouthWestNeighbour(Nodes[i - 1, j + 1]);
                     }
@@ -76,8 +77,7 @@ namespace PathFinding
                         node.SetSouthNeighhbour(Nodes[i, j + 1]);
                     }
                 }
-            }
-
+            });
         }
 
         public void MakeWall(Node node)
@@ -109,7 +109,7 @@ namespace PathFinding
 
                 foreach (Node neighbour in newSmallest.Neighbours)
                 {
-                    if(neighbour.IsWall == true || neighbour.IsSurroundedByDiagonalWall())
+                    if (neighbour.IsWall == true || neighbour.IsSurroundedByDiagonalWall())
                     {
                         continue;
                     }

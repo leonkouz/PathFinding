@@ -52,6 +52,7 @@
                       Loaded="Grid_Loaded"
                       Height="800"
                       Width="800"
+                      VirtualizingPanel.IsVirtualizingWhenGrouping="True"
                       >
 
             <ItemsControl.ItemsPanel>

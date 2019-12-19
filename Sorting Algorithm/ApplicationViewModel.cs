@@ -22,7 +22,7 @@ namespace PathFinding
 
         public ApplicationViewModel()
         {
-            grid = new Grid(25, 25);
+            grid = new Grid(25, 50);
         }
 
         public void SelectStartNode(Node node)
