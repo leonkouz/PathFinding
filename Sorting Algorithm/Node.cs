@@ -9,7 +9,7 @@ namespace PathFinding
 {
     public class Node : OnPropertyChangedBehaviour
     {
-        private Brush colour = Brushes.Khaki;
+        private Brush colour = Brushes.WhiteSmoke;
 
         public int X { get; private set; }
 
@@ -24,6 +24,8 @@ namespace PathFinding
                 OnPropertyChanged(nameof(Colour));
             }
         }
+
+        private List<Node> NeighbourBackups = new List<Node>();
 
         public List<Node> Neighbours => GetNeighbours();
 
@@ -51,6 +53,23 @@ namespace PathFinding
             Y = y;
         }
 
+        public Node()
+        {
+
+        }
+
+        public bool IsSamePositionAs(Node node)
+        {
+            if (node.X == this.X && node.Y == this.Y)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
         /// <summary>
         /// Indicates if the node has two walls that are
         /// adjacent to itself. This is used to determine
@@ -60,8 +79,8 @@ namespace PathFinding
         /// <returns></returns>
         public bool IsSurroundedByDiagonalWall()
         {
-            if(NorthNeightbour != null && NorthNeightbour.IsWall && 
-                WestNeightbour!= null && WestNeightbour.IsWall)
+            if (NorthNeightbour != null && NorthNeightbour.IsWall &&
+                WestNeightbour != null && WestNeightbour.IsWall)
             {
                 return true;
             }
@@ -70,8 +89,8 @@ namespace PathFinding
             {
                 return true;
             }
-            if(SouthNeightbour != null && SouthNeightbour.IsWall && 
-                EastNeightbour != null &&  EastNeightbour.IsWall)
+            if (SouthNeightbour != null && SouthNeightbour.IsWall &&
+                EastNeightbour != null && EastNeightbour.IsWall)
             {
                 return true;
             }
@@ -129,6 +148,9 @@ namespace PathFinding
             Colour = Brushes.Black;
             IsWall = true;
 
+            NeighbourBackups.AddRange(new List<Node>() { NorthNeightbour, NorthEastNeighbour, NorthWestNeighbour, EastNeightbour,
+            WestNeightbour, SouthNeightbour, SouthEastNeighbour,SouthWestNeighbour });
+
             NorthNeightbour = null;
             NorthEastNeighbour = null;
             NorthWestNeighbour = null;
@@ -137,6 +159,20 @@ namespace PathFinding
             SouthNeightbour = null;
             SouthEastNeighbour = null;
             SouthWestNeighbour = null;
+        }
+
+        public void RemoveWall()
+        {
+            Colour = Brushes.WhiteSmoke;
+
+            NorthNeightbour = NeighbourBackups[0];
+            NorthEastNeighbour = NeighbourBackups[1];
+            NorthWestNeighbour = NeighbourBackups[2];
+            EastNeightbour = NeighbourBackups[3]; 
+            WestNeightbour = NeighbourBackups[4]; 
+            SouthNeightbour = NeighbourBackups[5];
+            SouthEastNeighbour = NeighbourBackups[6];
+            SouthWestNeighbour = NeighbourBackups[7];
         }
 
         private List<Node> GetNeighbours()

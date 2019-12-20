@@ -43,6 +43,13 @@
                         Name="makeWallButton"
                         Click="MakeWallButton_Click"/>
 
+                <Button Content="Clear"
+                        Margin="20 0 0 0"
+                        Width="150"
+                        Height="50"
+                        Name="clearButton"
+                        Click="ClearButton_Click"/>
+
             </StackPanel>
 
 
@@ -69,11 +76,12 @@
                 <DataTemplate>
                     <local:NodeControl x:Name="node"
                                        Background="{Binding Colour}"
-                                       BorderBrush="Black"
-                                       BorderThickness="1 1 0 0"
+                                       BorderBrush="LightSlateGray"
+                                       BorderThickness="1 1 1 1"
                                        MouseDown="Node_MouseDown"    
                                        Node="{Binding}"
-                                       />
+                                       >
+                    </local:NodeControl>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
         </ItemsControl>

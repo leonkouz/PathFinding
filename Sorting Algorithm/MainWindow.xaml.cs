@@ -44,15 +44,7 @@ namespace PathFinding
 
             InitializeComponent();
 
-            interactiveControls.AddRange(new List<Control>() { makeWallButton, selectEndNodeButton, selectStartNodeButton, runDijkstraButton });
-        }
-
-        private void Node_MouseRightButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            Task.Run(() =>
-            {
-                viewModel.RunDijkstra();
-            });
+            interactiveControls.AddRange(new List<Control>() { makeWallButton, selectEndNodeButton, selectStartNodeButton, runDijkstraButton, clearButton });
         }
 
         private void DisableInteractiveButtons()
@@ -94,9 +86,13 @@ namespace PathFinding
             }
         }
 
-        private void RunDijkstraButton_Click(object sender, RoutedEventArgs e)
+        private async void RunDijkstraButton_Click(object sender, RoutedEventArgs e)
         {
-            viewModel.RunDijkstra();
+            DisableInteractiveButtons();
+
+            await viewModel.RunDijkstra();
+
+            EnableInteractiveButtons();
         }
 
         private void Node_MouseDown(object sender, MouseButtonEventArgs e)
@@ -108,7 +104,7 @@ namespace PathFinding
                 isEndNodeSelecting = false;
                 EnableInteractiveButtons();
                 viewModel.SelectEndNode(node);
-                node.Colour = Brushes.Yellow;
+                node.Colour = Brushes.Red;
             }
 
             if(isStartNodeSelecting == true)
@@ -116,7 +112,7 @@ namespace PathFinding
                 isStartNodeSelecting = false;
                 EnableInteractiveButtons();
                 viewModel.SelectStartNode(node);
-                node.Colour = Brushes.Blue;
+                node.Colour = Brushes.Green;
             }
 
             if(isWallNodeSelecting == true)
@@ -131,6 +127,11 @@ namespace PathFinding
         {
             isWallNodeSelecting = true;
             DisableInteractiveButtons();
+        }
+
+        private void ClearButton_Click(object sender, RoutedEventArgs e)
+        {
+            viewModel.ClearGrid();
         }
     }
 }
