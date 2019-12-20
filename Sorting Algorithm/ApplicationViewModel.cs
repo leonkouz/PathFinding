@@ -3,12 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Media;
 
 namespace PathFinding
 {
     public class ApplicationViewModel
     {
+        private Brush defaultNodeColour = Brushes.WhiteSmoke;
+
         private Grid grid;
 
         public Node StartNode { get; private set; }
@@ -29,17 +32,29 @@ namespace PathFinding
         {
             if(StartNode != null)
             {
-                StartNode.Colour = Brushes.Khaki;
+                StartNode.Colour = defaultNodeColour;
             }
 
             StartNode = node;
+        }
+
+        private void DeselecStartNode()
+        {
+            StartNode.Colour = defaultNodeColour;
+            StartNode = null;
+        }
+
+        private void DeselectEndNode()
+        {
+            EndNode.Colour = defaultNodeColour;
+            EndNode = null;
         }
 
         public void SelectEndNode(Node node)
         {
             if (EndNode != null)
             {
-                EndNode.Colour = Brushes.Khaki;
+                EndNode.Colour = defaultNodeColour;
             }
 
             EndNode = node;
@@ -50,15 +65,26 @@ namespace PathFinding
             grid.MakeWall(node);
         }
 
-        public void RunDijkstra()
+        public void ClearGrid()
         {
+            grid.Clear();
+            DeselecStartNode();
+            DeselectEndNode();
+        }
 
-            if (StartNode != null || EndNode != null)
+        public async Task RunDijkstra()
+        {
+            if (StartNode != null && EndNode != null)
             {
-                Task.Run(() =>
+                await Task.Run(() =>
                 {
                     grid.DijkstrasAlgorithm(StartNode, EndNode);
                 });
+            }
+            else
+            {
+                MessageBox.Show("Both a start node and an end node must be selected.");
+                return;
             }
         }
     }

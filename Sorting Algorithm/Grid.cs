@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Media;
 
@@ -21,8 +22,27 @@ namespace PathFinding
             Width = x;
             Height = y;
             Nodes = new Node[x, y];
+            Nodes.Initialize();
 
             SetupGrid(x, y);
+        }
+
+        public void Clear()
+        {
+            App.Current.Dispatcher.Invoke(() =>
+            {
+                Node[] nodesArray = Nodes.Cast<Node>().ToArray();
+
+                Parallel.ForEach(nodesArray, node =>
+                {
+                    node.Colour = Brushes.White;
+
+                    if (node.IsWall)
+                    {
+                        node.RemoveWall();
+                    }
+                });
+            });
         }
 
         private void SetupGrid(int x, int y)
@@ -55,7 +75,7 @@ namespace PathFinding
                     {
                         node.SetNorthEastNeighbour(Nodes[i + 1, j - 1]);
                     }
-                    if(i - 1 >= 0 && j - 1 >= 0)
+                    if (i - 1 >= 0 && j - 1 >= 0)
                     {
                         node.SetNorthWestNeighbour(Nodes[i - 1, j - 1]);
                     }
@@ -63,11 +83,11 @@ namespace PathFinding
                     {
                         node.SetNorthNeighhbour(Nodes[i, j - 1]);
                     }
-                    if(i + 1 < x && j + 1 < y)
+                    if (i + 1 < x && j + 1 < y)
                     {
                         node.SetSouthEastNeighbour(Nodes[i + 1, j + 1]);
                     }
-                    if(i - 1 >= 0 && j + 1 < y)
+                    if (i - 1 >= 0 && j + 1 < y)
                     {
                         node.SetSouthWestNeighbour(Nodes[i - 1, j + 1]);
                     }
@@ -87,6 +107,9 @@ namespace PathFinding
 
         public List<Node> DijkstrasAlgorithm(Node start, Node end)
         {
+            Node originalStart = start;
+            Node originalEnd = end;
+
             Dictionary<Node, int> totalCosts = new Dictionary<Node, int>();
             Dictionary<Node, Node> prevNodes = new Dictionary<Node, Node>();
             SimplePriorityQueue<Node> priorityQueue = new SimplePriorityQueue<Node>();
@@ -109,15 +132,25 @@ namespace PathFinding
 
                 foreach (Node neighbour in newSmallest.Neighbours)
                 {
-                    if(neighbour.IsWall == true || neighbour.IsSurroundedByDiagonalWall())
+                    if (neighbour.IsWall == true)
                     {
                         continue;
                     }
 
-                    App.Current.Dispatcher.Invoke(() =>
+                    if (!neighbour.IsSamePositionAs(originalStart) && !neighbour.IsSamePositionAs(originalEnd))
                     {
-                        neighbour.Colour = Brushes.Green;
-                    });
+                        App.Current.Dispatcher.Invoke(() =>
+                        {
+                             neighbour.Colour = Brushes.SkyBlue;
+                        });
+                    }
+
+                    // Run after changing colour to green to 
+                    // show that node is still processed by the algorithm.
+                    if (neighbour.IsSurroundedByDiagonalWall())
+                    {
+                        continue;
+                    }
 
                     if (!visited.Contains(neighbour))
                     {
@@ -146,6 +179,9 @@ namespace PathFinding
                             break;
                         }
                     }
+
+                    Thread.Sleep(5);
+
                 }
             }
 
@@ -156,10 +192,13 @@ namespace PathFinding
             {
                 Node neighbour = prevNodes.Where(x => x.Key.X == curr.X && x.Key.Y == curr.Y).First().Value;
 
-                App.Current.Dispatcher.Invoke(() =>
+                if (!neighbour.IsSamePositionAs(originalStart) && !neighbour.IsSamePositionAs(originalEnd))
                 {
-                    neighbour.Colour = Brushes.Pink;
-                });
+                    App.Current.Dispatcher.Invoke(() =>
+                    {
+                        neighbour.Colour = Brushes.DarkSlateBlue;
+                    });
+                }
 
                 shortestPath.Add(neighbour);
                 curr = neighbour;
