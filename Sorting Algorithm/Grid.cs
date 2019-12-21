@@ -139,12 +139,6 @@ namespace PathFinding
                         });
                     }
 
-                    // Run after changing colour to green to 
-                    // show that node is still processed by the algorithm.
-                    if (neighbour.IsSurroundedByDiagonalWall())
-                    {
-                        continue;
-                    }
 
                     if (!visited.Contains(neighbour))
                     {

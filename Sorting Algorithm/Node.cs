@@ -70,39 +70,6 @@ namespace PathFinding
             }
         }
 
-        /// <summary>
-        /// Indicates if the node has two walls that are
-        /// adjacent to itself. This is used to determine
-        /// if the node can be walked on when a diagonal wall
-        /// is placed next to it.
-        /// </summary>
-        /// <returns></returns>
-        public bool IsSurroundedByDiagonalWall()
-        {
-            if (NorthNeightbour != null && NorthNeightbour.IsWall &&
-                WestNeightbour != null && WestNeightbour.IsWall)
-            {
-                return true;
-            }
-            if (NorthNeightbour != null && NorthNeightbour.IsWall &&
-                EastNeightbour != null && EastNeightbour.IsWall)
-            {
-                return true;
-            }
-            if (SouthNeightbour != null && SouthNeightbour.IsWall &&
-                EastNeightbour != null && EastNeightbour.IsWall)
-            {
-                return true;
-            }
-            if (SouthNeightbour != null && SouthNeightbour.IsWall &&
-                WestNeightbour != null && WestNeightbour.IsWall)
-            {
-                return true;
-            }
-
-            return false;
-        }
-
         public void SetNorthWestNeighbour(Node node)
         {
             NorthWestNeighbour = node;
@@ -147,6 +114,27 @@ namespace PathFinding
         {
             Colour = Brushes.Black;
             IsWall = true;
+
+            if (SouthWestNeighbour != null && SouthWestNeighbour.IsWall)
+            {
+                WestNeightbour.SouthEastNeighbour = null;
+                SouthNeightbour.NorthWestNeighbour = null;
+            }
+            if (SouthEastNeighbour != null && SouthEastNeighbour.IsWall)
+            {
+                EastNeightbour.SouthWestNeighbour = null;
+                SouthNeightbour.NorthEastNeighbour = null;
+            }
+            if (NorthEastNeighbour != null && NorthEastNeighbour.IsWall)
+            {
+                EastNeightbour.NorthWestNeighbour = null;
+                NorthNeightbour.SouthEastNeighbour = null;
+            }
+            if (NorthWestNeighbour != null && NorthWestNeighbour.IsWall)
+            {
+                NorthNeightbour.SouthWestNeighbour = null;
+                WestNeightbour.NorthEastNeighbour = null;
+            }
 
             NeighbourBackups.AddRange(new List<Node>() { NorthNeightbour, NorthEastNeighbour, NorthWestNeighbour, EastNeightbour,
             WestNeightbour, SouthNeightbour, SouthEastNeighbour,SouthWestNeighbour });
