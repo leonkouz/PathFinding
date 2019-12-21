@@ -22,7 +22,6 @@ namespace PathFinding
             Width = x;
             Height = y;
             Nodes = new Node[x, y];
-            Nodes.Initialize();
 
             SetupGrid(x, y);
         }
