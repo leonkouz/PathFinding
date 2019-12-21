@@ -36,13 +36,6 @@
                         Click="RunDijkstraButton_Click"
                         />
 
-                <Button Content="Make Wall"
-                        Margin="20 0 0 0"
-                        Width="150"
-                        Height="50"
-                        Name="makeWallButton"
-                        Click="MakeWallButton_Click"/>
-
                 <Button Content="Clear"
                         Margin="20 0 0 0"
                         Width="150"
@@ -59,7 +52,6 @@
                       Loaded="Grid_Loaded"
                       Height="800"
                       Width="800"
-                      VirtualizingPanel.IsVirtualizingWhenGrouping="True"
                       >
 
             <ItemsControl.ItemsPanel>
@@ -74,6 +66,22 @@
             </ItemsControl.ItemsPanel>
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
+
+                    <!--
+                    <StackPanel Orientation="Horizontal"
+                                Width="40"
+                                PreviewMouseDown="StackPanel_PreviewMouseDown"
+                                Tag="{Binding}"
+                                Background="{Binding Colour}"
+                                >
+                        <TextBlock Text="{Binding X}"/>
+                        <TextBlock Text=","/>
+                        <TextBlock Text="{Binding Y}"/>
+
+                    </StackPanel>
+                    -->
+                    
+                    
                     <local:NodeControl x:Name="node"
                                        Background="{Binding Colour}"
                                        BorderBrush="LightSlateGray"
@@ -82,6 +90,8 @@
                                        Node="{Binding}"
                                        >
                     </local:NodeControl>
+
+                   
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
         </ItemsControl>

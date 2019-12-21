@@ -47,62 +47,56 @@ namespace PathFinding
 
         private void SetupGrid(int x, int y)
         {
-
-            Parallel.For(0, x, i =>
+            Parallel.For(0, y, i =>
             {
-                for (int j = 0; j < y; j++)
+                for (int j = 0; j < x; j++)
                 {
                     Node node = new Node(i, j);
 
-                    Nodes[i, j] = node;
+                    Nodes[j, i] = node;
                 }
             });
 
-            Parallel.For(0, x, i =>
+            Parallel.For(0, y, i =>
             {
-                for (int j = 0; j < y; j++)
+                for (int j = 0; j < x; j++)
                 {
-                    Node node = Nodes[i, j];
+                    Node node = Nodes[j, i];
 
-                    if (i - 1 >= 0)
+                    if (j > 0)
                     {
-                        node.SetWestNeighhbour(Nodes[i - 1, j]);
+                        node.SetWestNeighhbour(Nodes[j - 1, i]);
                     }
-                    if (i + 1 < x)
+                    if (j + 1 < x)
                     {
-                        node.SetEastNeighhbour(Nodes[i + 1, j]);
+                        node.SetEastNeighhbour(Nodes[j + 1, i]);
                     }
-                    if (i + 1 < x && j - 1 >= 0)
+                    if (i > 0)
                     {
-                        node.SetNorthEastNeighbour(Nodes[i + 1, j - 1]);
+                        node.SetNorthNeighhbour(Nodes[j, i - 1]);
                     }
-                    if (i - 1 >= 0 && j - 1 >= 0)
+                    if (i + 1 < y)
                     {
-                        node.SetNorthWestNeighbour(Nodes[i - 1, j - 1]);
+                        node.SetSouthNeighhbour(Nodes[j, i + 1]);
                     }
-                    if (j - 1 >= 0)
+                    if (j > 0 && i > 0)
                     {
-                        node.SetNorthNeighhbour(Nodes[i, j - 1]);
+                        node.SetNorthWestNeighbour(Nodes[j - 1, i - 1]);
                     }
-                    if (i + 1 < x && j + 1 < y)
+                    if (j + 1 < x && i > 0)
                     {
-                        node.SetSouthEastNeighbour(Nodes[i + 1, j + 1]);
+                        node.SetNorthEastNeighbour(Nodes[j + 1, i - 1]);
                     }
-                    if (i - 1 >= 0 && j + 1 < y)
+                    if (j + 1 < x && i + 1 < y)
                     {
-                        node.SetSouthWestNeighbour(Nodes[i - 1, j + 1]);
+                        node.SetSouthEastNeighbour(Nodes[j + 1, i + 1]);
                     }
-                    if (j + 1 < y)
+                    if(j > 0 && i + 1 < y)
                     {
-                        node.SetSouthNeighhbour(Nodes[i, j + 1]);
+                        node.SetSouthWestNeighbour(Nodes[j - 1, i + 1]);
                     }
                 }
             });
-        }
-
-        public void MakeWall(Node node)
-        {
-            node.MakeWall();
         }
 
         public List<Node> DijkstrasAlgorithm(Node start, Node end)
@@ -141,7 +135,7 @@ namespace PathFinding
                     {
                         App.Current.Dispatcher.Invoke(() =>
                         {
-                             neighbour.Colour = Brushes.SkyBlue;
+                            neighbour.Colour = Brushes.SkyBlue;
                         });
                     }
 

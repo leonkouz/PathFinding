@@ -164,15 +164,19 @@ namespace PathFinding
         public void RemoveWall()
         {
             Colour = Brushes.WhiteSmoke;
+            IsWall = false;
 
-            NorthNeightbour = NeighbourBackups[0];
-            NorthEastNeighbour = NeighbourBackups[1];
-            NorthWestNeighbour = NeighbourBackups[2];
-            EastNeightbour = NeighbourBackups[3]; 
-            WestNeightbour = NeighbourBackups[4]; 
-            SouthNeightbour = NeighbourBackups[5];
-            SouthEastNeighbour = NeighbourBackups[6];
-            SouthWestNeighbour = NeighbourBackups[7];
+            if (NeighbourBackups.Count > 0)
+            {
+                NorthNeightbour = NeighbourBackups[0];
+                NorthEastNeighbour = NeighbourBackups[1] ?? null;
+                NorthWestNeighbour = NeighbourBackups[2] ?? null;
+                EastNeightbour = NeighbourBackups[3] ?? null;
+                WestNeightbour = NeighbourBackups[4] ?? null;
+                SouthNeightbour = NeighbourBackups[5] ?? null;
+                SouthEastNeighbour = NeighbourBackups[6] ?? null;
+                SouthWestNeighbour = NeighbourBackups[7] ?? null;
+            }
         }
 
         private List<Node> GetNeighbours()

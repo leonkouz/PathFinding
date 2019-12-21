@@ -34,7 +34,6 @@ namespace PathFinding
 
         private bool isStartNodeSelecting = false;
         private bool isEndNodeSelecting = false;
-        private bool isWallNodeSelecting = false;
 
         private List<Control> interactiveControls = new List<Control>();
 
@@ -44,7 +43,7 @@ namespace PathFinding
 
             InitializeComponent();
 
-            interactiveControls.AddRange(new List<Control>() { makeWallButton, selectEndNodeButton, selectStartNodeButton, runDijkstraButton, clearButton });
+            interactiveControls.AddRange(new List<Control>() { selectEndNodeButton, selectStartNodeButton, runDijkstraButton, clearButton });
         }
 
         private void DisableInteractiveButtons()
@@ -106,27 +105,24 @@ namespace PathFinding
                 viewModel.SelectEndNode(node);
                 node.Colour = Brushes.Red;
             }
-
-            if(isStartNodeSelecting == true)
+            else if(isStartNodeSelecting == true)
             {
                 isStartNodeSelecting = false;
                 EnableInteractiveButtons();
                 viewModel.SelectStartNode(node);
                 node.Colour = Brushes.Green;
             }
-
-            if(isWallNodeSelecting == true)
+            else
             {
-                isWallNodeSelecting = false;
-                viewModel.MakeWall(node);
-                EnableInteractiveButtons();
+                if (node.IsWall)
+                {
+                    node.RemoveWall();
+                }
+                else
+                {
+                    node.MakeWall();
+                }
             }
-        }
-
-        private void MakeWallButton_Click(object sender, RoutedEventArgs e)
-        {
-            isWallNodeSelecting = true;
-            DisableInteractiveButtons();
         }
 
         private void ClearButton_Click(object sender, RoutedEventArgs e)
