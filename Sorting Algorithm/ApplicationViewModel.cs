@@ -30,7 +30,7 @@ namespace PathFinding
 
         public void SelectStartNode(Node node)
         {
-            if(StartNode != null)
+            if (StartNode != null)
             {
                 StartNode.Colour = defaultNodeColour;
             }
@@ -40,14 +40,20 @@ namespace PathFinding
 
         private void DeselecStartNode()
         {
-            StartNode.Colour = defaultNodeColour;
-            StartNode = null;
+            if (StartNode != null)
+            {
+                StartNode.Colour = defaultNodeColour;
+                StartNode = null;
+            }
         }
 
         private void DeselectEndNode()
         {
-            EndNode.Colour = defaultNodeColour;
-            EndNode = null;
+            if (EndNode != null)
+            {
+                EndNode.Colour = defaultNodeColour;
+                EndNode = null;
+            }
         }
 
         public void SelectEndNode(Node node)
@@ -67,13 +73,13 @@ namespace PathFinding
             DeselectEndNode();
         }
 
-        public async Task RunDijkstra()
+        private async Task RunAlgorithm(Action function)
         {
             if (StartNode != null && EndNode != null)
             {
                 await Task.Run(() =>
                 {
-                    grid.DijkstrasAlgorithm(StartNode, EndNode);
+                    function.Invoke();
                 });
             }
             else
@@ -81,6 +87,22 @@ namespace PathFinding
                 MessageBox.Show("Both a start node and an end node must be selected.");
                 return;
             }
+        }
+
+        public async Task RunDijkstra()
+        {
+            await Task.Run(async () =>
+            {
+                await RunAlgorithm(() => grid.DijkstrasAlgorithm(StartNode, EndNode));
+            });
+        }
+
+        public async Task RunAStar()
+        {
+            await Task.Run(async () =>
+            {
+                await RunAlgorithm(() => grid.AStarAlgorithm(StartNode, EndNode));
+            });
         }
     }
 }

@@ -43,7 +43,7 @@ namespace PathFinding
 
             InitializeComponent();
 
-            interactiveControls.AddRange(new List<Control>() { selectEndNodeButton, selectStartNodeButton, runDijkstraButton, clearButton });
+            interactiveControls.AddRange(new List<Control>() { selectEndNodeButton, selectStartNodeButton, runDijkstraButton, runAStarButton , clearButton });
         }
 
         private void DisableInteractiveButtons()
@@ -94,6 +94,15 @@ namespace PathFinding
             EnableInteractiveButtons();
         }
 
+        private async void runAStarButton_Click(object sender, RoutedEventArgs e)
+        {
+            DisableInteractiveButtons();
+
+            await viewModel.RunAStar();
+
+            EnableInteractiveButtons();
+        }
+
         private void Node_MouseDown(object sender, MouseButtonEventArgs e)
         {
             Node node = (sender as NodeControl).Node;
@@ -129,5 +138,7 @@ namespace PathFinding
         {
             viewModel.ClearGrid();
         }
+
+        
     }
 }

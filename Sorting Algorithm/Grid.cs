@@ -34,7 +34,7 @@ namespace PathFinding
 
                 Parallel.ForEach(nodesArray, node =>
                 {
-                    node.Colour = Brushes.White;
+                    node.Colour = Brushes.WhiteSmoke;
 
                     if (node.IsWall)
                     {
@@ -90,12 +90,70 @@ namespace PathFinding
                     {
                         node.SetSouthEastNeighbour(Nodes[j + 1, i + 1]);
                     }
-                    if(j > 0 && i + 1 < y)
+                    if (j > 0 && i + 1 < y)
                     {
                         node.SetSouthWestNeighbour(Nodes[j - 1, i + 1]);
                     }
                 }
             });
+        }
+
+        public void AStarAlgorithm(Node start, Node end)
+        {
+            SimplePriorityQueue<Node, double> open = new SimplePriorityQueue<Node, double>();
+            List<Node> closed = new List<Node>();
+
+            open.Enqueue(start, 0);
+
+            while (open.Count != 0)
+            {
+                Node q = open.Dequeue();
+
+                foreach (Node node in q.Neighbours)
+                {
+
+                    if (node.IsWall == true)
+                    {
+                        continue;
+                    }
+
+                    if (node != end && node != start)
+                    {
+                        App.Current.Dispatcher.Invoke(() =>
+                        {
+                            node.Colour = Brushes.DarkSlateBlue;
+                        });
+                    }
+
+                    if (node == end)
+                    {
+                        return;
+                    }
+                    else
+                    {
+                        node.Cost = q.Cost + 1;
+                        node.Heuristic = Math.Sqrt((node.X - end.X) * (node.X - end.X) + (node.Y - end.Y) * (node.Y - end.Y)); // Fix this.
+
+                        IEnumerable<Node> sameOpen = open.Where(x => x.IsSamePositionAs(node));
+                        IEnumerable<Node> sameClosed = closed.Where(x => x.IsSamePositionAs(node));
+
+                        if (sameOpen.Count() > 0 && sameOpen.First().Heuristic <= node.Heuristic)
+                        {
+                            continue;
+                        }
+                        else if (sameClosed.Count() > 0 && sameClosed.First().Heuristic <= node.Heuristic)
+                        {
+                            continue;
+                        }
+                        else
+                        {
+                            open.Enqueue(node, node.Cost + node.Heuristic);
+                        }
+                    }
+                }
+
+                closed.Add(q);
+            }
         }
 
         public List<Node> DijkstrasAlgorithm(Node start, Node end)

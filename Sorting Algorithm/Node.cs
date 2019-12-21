@@ -31,6 +31,10 @@ namespace PathFinding
 
         public bool IsWall { get; private set; } = false;
 
+        public int Cost { get; set; }
+        
+        public double Heuristic { get; set; }
+
         public Node NorthWestNeighbour { get; private set; }
 
         public Node NorthNeightbour { get; private set; }
