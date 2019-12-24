@@ -139,6 +139,29 @@ namespace PathFinding
             viewModel.ClearGrid();
         }
 
-        
+        Node lastChangedNode;
+
+        private void node_PreviewMouseMove(object sender, MouseEventArgs e)
+        {
+            if(Mouse.LeftButton == MouseButtonState.Pressed)
+            {
+                Node node = (sender as NodeControl).Node;
+
+                if(node == lastChangedNode)
+                {
+                    return;
+                }
+                lastChangedNode = node;
+
+                if (!node.IsWall)
+                {
+                    node.MakeWall();
+                }
+                else
+                {
+                    node.RemoveWall();
+                }
+            }
+        }
     }
 }

@@ -95,6 +95,7 @@
                                        BorderBrush="LightSlateGray"
                                        BorderThickness="1 1 1 1"
                                        MouseDown="Node_MouseDown"    
+                                       PreviewMouseMove="node_PreviewMouseMove"
                                        Node="{Binding}"
                                        >
                     </local:NodeControl>
