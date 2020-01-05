@@ -56,7 +56,27 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="MainWindow.xaml">
+    <Compile Include="Controls\LinkingLine.xaml.cs">
+      <DependentUpon>LinkingLine.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\WeightedNodeControl.xaml.cs">
+      <DependentUpon>WeightedNodeControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="WeightedGraphWindow.xaml.cs">
+      <DependentUpon>WeightedGraphWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\GraphSelectionWindow.xaml.cs">
+      <DependentUpon>GraphSelectionWindow.xaml</DependentUpon>
+    </Compile>
+    <Page Include="Controls\LinkingLine.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\WeightedNodeControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UnweightedGraphWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -64,23 +84,31 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="ApplicationViewModel.cs" />
-    <Compile Include="Grid.cs" />
-    <Compile Include="MainWindow.xaml.cs">
-      <DependentUpon>MainWindow.xaml</DependentUpon>
+    <Compile Include="ViewModels\ApplicationViewModel.cs" />
+    <Compile Include="Grid\Grid.cs" />
+    <Compile Include="UnweightedGraphWindow.xaml.cs">
+      <DependentUpon>UnweightedGraphWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="NodeControl.xaml">
+    <Page Include="Controls\UnweightedNodeControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="WeightedGraphWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\GraphSelectionWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Node.cs" />
-    <Compile Include="NodeControl.xaml.cs">
-      <DependentUpon>NodeControl.xaml</DependentUpon>
+    <Compile Include="Grid\Node.cs" />
+    <Compile Include="Controls\UnweightedNodeControl.xaml.cs">
+      <DependentUpon>UnweightedNodeControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="OnPropertyChangedBehaviour.cs" />
+    <Compile Include="ViewModels\OnPropertyChangedBehaviour.cs" />
     <Compile Include="PriorityQueues\FastPriorityQueue.cs" />
     <Compile Include="PriorityQueues\FastPriorityQueueNode.cs" />
     <Compile Include="PriorityQueues\GenericPriorityQueue.cs" />

@@ -1,0 +1,24 @@
+﻿<Window x:Class="PathFinding.WeightedGraphWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PathFinding"
+        mc:Ignorable="d"
+        Title="WeightedGraphWindow" Height="450" Width="800"
+        PreviewMouseDown="Window_PreviewMouseDown">
+
+
+    <Canvas Name="mainCanvas">
+
+        <Button Width="83"
+                Height="38"
+                Name="newNodeButton"
+                Content="New Node"
+                Canvas.Left="10" 
+                Canvas.Top="10"
+                Click="newNodeButton_Click"/>
+    </Canvas>
+
+
+</Window>

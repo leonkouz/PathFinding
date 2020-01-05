@@ -28,7 +28,7 @@ namespace PathFinding
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class UnweightedGraphWindow : Window
     {
         private ApplicationViewModel viewModel = new ApplicationViewModel();
 
@@ -37,7 +37,7 @@ namespace PathFinding
 
         private List<Control> interactiveControls = new List<Control>();
 
-        public MainWindow()
+        public UnweightedGraphWindow()
         {
             this.DataContext = viewModel;
 
@@ -105,7 +105,7 @@ namespace PathFinding
 
         private void Node_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            Node node = (sender as NodeControl).Node;
+            Node node = (sender as UnweightedNodeControl).Node;
 
             if (isEndNodeSelecting == true)
             {
@@ -145,7 +145,7 @@ namespace PathFinding
         {
             if(Mouse.LeftButton == MouseButtonState.Pressed)
             {
-                Node node = (sender as NodeControl).Node;
+                Node node = (sender as UnweightedNodeControl).Node;
 
                 if(node == lastChangedNode)
                 {

@@ -18,7 +18,7 @@ namespace PathFinding
     /// <summary>
     /// Interaction logic for NodeControl.xaml
     /// </summary>
-    public partial class NodeControl : UserControl
+    public partial class UnweightedNodeControl : UserControl
     {
         public Node Node
         {
@@ -31,10 +31,10 @@ namespace PathFinding
         
         public static readonly DependencyProperty NodeProperty =
             DependencyProperty.Register("Node", typeof(Node),
-              typeof(NodeControl), new PropertyMetadata(null));
+              typeof(UnweightedNodeControl), new PropertyMetadata(null));
 
 
-        public NodeControl()
+        public UnweightedNodeControl()
         {
             InitializeComponent();
         }
