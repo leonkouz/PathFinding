@@ -29,6 +29,10 @@ namespace PathFinding
 
         public bool IsFollowingMouse { get; private set; } = false;
 
+        private WeightedNodeControl nodeToFollow;
+
+        public bool RequiresDestination { get; private set; } = false;
+
         public double X1
         {
             get { return (double)GetValue(X1Property); }
@@ -88,12 +92,20 @@ namespace PathFinding
 
         #endregion
 
+        /// <summary>
+        /// Creates a LinkingLine that which already has a destination.
+        /// </summary>
+        /// <param name="source"></param>
+        /// <param name="destination"></param>
         public LinkingLine(WeightedNodeControl source, WeightedNodeControl destination)
         {
             InitializeComponent();
 
             this.source = source;
             this.destination = destination;
+
+            source.AddLinkingLine(this);
+            destination.AddLinkingLine(this);
 
             destination.PreviewMouseLeftButtonDown += Destination_PreviewMouseLeftButtonDown;
 
@@ -102,27 +114,109 @@ namespace PathFinding
             timer.Enabled = true;
         }
 
+        /// <summary>
+        /// Creates a LinkingLine that only has a source and can be linked to a new destination.
+        /// </summary>
+        /// <param name=""></param>
+        public LinkingLine(WeightedNodeControl source)
+        {
+            InitializeComponent();
+
+            this.source = source;
+
+            RequiresDestination = true;
+
+            source.AddLinkingLine(this);
+
+            timer.Interval = 5;
+            timer.AutoReset = true;
+            timer.Enabled = true;
+        }
+
+        private void LinkingLine_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            if (RequiresDestination)
+            {
+                if(ParentIsOfType((FrameworkElement)Mouse.DirectlyOver, typeof(WeightedNodeControl)))
+                {
+                    WeightedNodeControl node = (WeightedNodeControl)GetParentControl((FrameworkElement)Mouse.DirectlyOver, typeof(WeightedNodeControl));
+                    node.WasLinkedTo = true;
+                    node.AddLinkingLine(this);
+                    this.destination = node;
+                    RequiresDestination = false;
+
+                    ((UIElement)Parent).PreviewMouseLeftButtonDown -= LinkingLine_PreviewMouseLeftButtonDown;
+                }
+            }
+        }
+
+        private FrameworkElement GetParentControl(FrameworkElement element, Type type)
+        {
+            if (element == null)
+            {
+                return null;
+            }
+
+            if (element.GetType() == type)
+            {
+                return element;
+            }
+            else
+            {
+                return GetParentControl((FrameworkElement)element.Parent, type);
+            }
+        }
+
+        private bool ParentIsOfType(FrameworkElement element, Type type)
+        {
+            if(element == null)
+            {
+                return false;
+            }
+
+            if (element.GetType() == type)
+            {
+                return true;
+            }
+            else
+            {
+                return ParentIsOfType((FrameworkElement)element.Parent, type);
+            }
+        }
+
         private void Destination_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             StopFollowingMouse();
+           
+            destination.PreviewMouseLeftButtonDown -= Destination_PreviewMouseLeftButtonDown;
         }
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            FollowMouse();
+            if (RequiresDestination)
+            {
+                ((UIElement)Parent).PreviewMouseLeftButtonDown += LinkingLine_PreviewMouseLeftButtonDown;
+            }
+
+            FollowMouse(destination);
         }
 
-        private void FollowMouse()
+        public void FollowMouse(WeightedNodeControl selectedNode)
         {
+            nodeToFollow = selectedNode;
+
             timer.Elapsed += Timer_Elapsed;
             timer.Start();
             IsFollowingMouse = true;
         }
 
-        private void StopFollowingMouse()
+        public void StopFollowingMouse()
         {
-            timer.Elapsed -= Timer_Elapsed;
+            nodeToFollow = null;
+
             timer.Stop();
+            timer.Elapsed -= Timer_Elapsed;
+            
             IsFollowingMouse = false;
         }
 
@@ -134,8 +228,16 @@ namespace PathFinding
                 {
                     Point mousePosition = Mouse.GetPosition(WeightedGraphWindow.MainCanvas);
 
-                    X2 = mousePosition.X; 
-                    Y2 = mousePosition.Y;
+                    if (nodeToFollow == source)
+                    {
+                        X1 = mousePosition.X;
+                        Y1 = mousePosition.Y;
+                    }
+                    else if(nodeToFollow == destination)
+                    {
+                        X2 = mousePosition.X;
+                        Y2 = mousePosition.Y;
+                    }
                 });
             }
         }

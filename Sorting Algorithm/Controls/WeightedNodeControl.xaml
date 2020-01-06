@@ -24,6 +24,7 @@
             <ContextMenu Name="contextMenu" StaysOpen="True" Closed="contextMenu_Closed">
                 <MenuItem Header="Delete" Name="contextMenuDeleteButton" Click="contextMenuDeleteButton_Click"/>
                 <MenuItem Header="New Path" Name="contextMenuNewPathButton" Click="contextMenuNewPathButton_Click"/>
+                <MenuItem Header="Link to Node" Name="contextMenuLinkToNodeButton" Click="contextMenuLinkToNodeButton_Click"/>
             </ContextMenu>
         </Border.ContextMenu>
 
