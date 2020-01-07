@@ -62,7 +62,7 @@
     <Compile Include="Controls\WeightedNodeControl.xaml.cs">
       <DependentUpon>WeightedNodeControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="WeightedGraphWindow.xaml.cs">
+    <Compile Include="Windows\WeightedGraphWindow.xaml.cs">
       <DependentUpon>WeightedGraphWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Windows\GraphSelectionWindow.xaml.cs">
@@ -76,7 +76,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UnweightedGraphWindow.xaml">
+    <Page Include="Windows\UnweightedGraphWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -86,7 +86,7 @@
     </Compile>
     <Compile Include="ViewModels\ApplicationViewModel.cs" />
     <Compile Include="Grid\Grid.cs" />
-    <Compile Include="UnweightedGraphWindow.xaml.cs">
+    <Compile Include="Windows\UnweightedGraphWindow.xaml.cs">
       <DependentUpon>UnweightedGraphWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
@@ -94,7 +94,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="WeightedGraphWindow.xaml">
+    <Page Include="Windows\WeightedGraphWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

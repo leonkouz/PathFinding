@@ -8,17 +8,29 @@
              d:DesignHeight="450" d:DesignWidth="800"
              Loaded="UserControl_Loaded">
 
+    <Canvas Background="Transparent"
+            >
 
-    <Line Stroke="Black"
-          X1="{Binding X1, RelativeSource={
-                       RelativeSource AncestorType={x:Type local:LinkingLine}}}" 
-          Y1="{Binding Y1, RelativeSource={
-                       RelativeSource AncestorType={x:Type local:LinkingLine}}}"
-          X2="{Binding X2, RelativeSource={
-                       RelativeSource AncestorType={x:Type local:LinkingLine}}}"
-          Y2="{Binding Y2, RelativeSource={
-                       RelativeSource AncestorType={x:Type local:LinkingLine}}}"
-          StrokeThickness="10"
+        <TextBlock Text="0" 
+                   FontSize="20"
+                   Name="costTextBlock"
+                   Canvas.Top="{Binding CostYPosition, RelativeSource={
+                                RelativeSource AncestorType={x:Type local:LinkingLine}}}"
+                   Canvas.Left="{Binding CostXPosition, RelativeSource={
+                                RelativeSource AncestorType={x:Type local:LinkingLine}}}"/>
+
+        <Line Stroke="Black"
+              X1="{Binding X1, RelativeSource={
+                         RelativeSource AncestorType={x:Type local:LinkingLine}}}" 
+              Y1="{Binding Y1, RelativeSource={
+                         RelativeSource AncestorType={x:Type local:LinkingLine}}}"
+              X2="{Binding X2, RelativeSource={
+                         RelativeSource AncestorType={x:Type local:LinkingLine}}}"
+              Y2="{Binding Y2, RelativeSource={
+                         RelativeSource AncestorType={x:Type local:LinkingLine}}}"
+              StrokeThickness="10"
           />
+
+    </Canvas>
 
 </UserControl>

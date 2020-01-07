@@ -33,9 +33,38 @@ namespace PathFinding
 
         public bool RequiresDestination { get; private set; } = false;
 
+        public double CostXPosition
+        {
+            get { return (double)GetValue(CostXPositionProperty) / 2; }
+            set
+            {
+                SetValue(CostXPositionProperty, value);
+            }
+        }
+
+        public static readonly DependencyProperty CostXPositionProperty =
+           DependencyProperty.Register("CostXPosition", typeof(double),
+             typeof(LinkingLine), new PropertyMetadata(null));
+
+        public double CostYPosition
+        {
+            get { return (double)GetValue(CostYPositionProperty) / 2; }
+            set
+            {
+                SetValue(CostYPositionProperty, value);
+            }
+        }
+
+        public static readonly DependencyProperty CostYPositionProperty =
+           DependencyProperty.Register("CostYPosition", typeof(double),
+             typeof(LinkingLine), new PropertyMetadata(null));
+
+
+
+
         public double X1
         {
-            get { return (double)GetValue(X1Property); }
+            get { return (double)GetValue(X1Property) / 2; }
             set
             {
                 SetValue(X1Property, value);
@@ -78,7 +107,6 @@ namespace PathFinding
         public static readonly DependencyProperty X1Property =
            DependencyProperty.Register("X1", typeof(double),
              typeof(LinkingLine), new PropertyMetadata(null));
-
 
         public static readonly DependencyProperty X2Property =
             DependencyProperty.Register("X2", typeof(double),
@@ -137,7 +165,7 @@ namespace PathFinding
         {
             if (RequiresDestination)
             {
-                if(ParentIsOfType((FrameworkElement)Mouse.DirectlyOver, typeof(WeightedNodeControl)))
+                if (ParentIsOfType((FrameworkElement)Mouse.DirectlyOver, typeof(WeightedNodeControl)))
                 {
                     WeightedNodeControl node = (WeightedNodeControl)GetParentControl((FrameworkElement)Mouse.DirectlyOver, typeof(WeightedNodeControl));
                     node.WasLinkedTo = true;
@@ -169,7 +197,7 @@ namespace PathFinding
 
         private bool ParentIsOfType(FrameworkElement element, Type type)
         {
-            if(element == null)
+            if (element == null)
             {
                 return false;
             }
@@ -187,7 +215,7 @@ namespace PathFinding
         private void Destination_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             StopFollowingMouse();
-           
+
             destination.PreviewMouseLeftButtonDown -= Destination_PreviewMouseLeftButtonDown;
         }
 
@@ -216,7 +244,7 @@ namespace PathFinding
 
             timer.Stop();
             timer.Elapsed -= Timer_Elapsed;
-            
+
             IsFollowingMouse = false;
         }
 
@@ -233,13 +261,38 @@ namespace PathFinding
                         X1 = mousePosition.X;
                         Y1 = mousePosition.Y;
                     }
-                    else if(nodeToFollow == destination)
+                    else if (nodeToFollow == destination)
                     {
                         X2 = mousePosition.X;
                         Y2 = mousePosition.Y;
                     }
+
+                    if( source != null && destination != null)
+                    {
+                        // https://stackoverflow.com/questions/17195055/calculate-a-perpendicular-offset-from-a-diagonal-line/17195324#17195324
+                        // Convulated way of getting the center of the source node and center of the destination node because using X1 and X2 does not 
+                        // seem to give the correct positions.
+                        Point sourcePoint = new Point((Canvas.GetLeft(source) + (source.Width / 2)), (Canvas.GetTop(source) + (source.Height / 2)));
+                        Point destinationPoint = new Point((Canvas.GetLeft(destination) + (source.Width / 2)), (Canvas.GetTop(destination) + (source.Height / 2)));
+
+                        Point M = GetCenterPoint(sourcePoint, destinationPoint);
+                        Vector p = Point.Subtract(sourcePoint, destinationPoint);
+                        Point n = new Point(-p.Y, p.X);
+                        int normLength = (int)Math.Sqrt((n.X * n.X) + (n.Y * n.Y));
+                        n.X = n.X / normLength;
+                        n.Y = n.Y / normLength;
+
+                        Point final = new Point(M.X + (30 * n.X), M.Y + (30 * n.Y));
+
+                        Canvas.SetTop(costTextBlock, final.Y);
+                        Canvas.SetLeft(costTextBlock, final.X);
+                    }
                 });
             }
+        }
+        private Point GetCenterPoint(Point p1, Point p2)
+        {
+            return new Point((p2.X + p1.X) / 2, (p2.Y + p1.Y) / 2);
         }
     }
 }
