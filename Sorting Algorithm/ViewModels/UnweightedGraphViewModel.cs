@@ -8,7 +8,7 @@ using System.Windows.Media;
 
 namespace PathFinding
 {
-    public class ApplicationViewModel
+    public class UnweightedGraphViewModel
     {
         private Brush defaultNodeColour = Brushes.WhiteSmoke;
 
@@ -23,7 +23,7 @@ namespace PathFinding
             get => grid.Nodes.Cast<Node>().ToList();
         }
 
-        public ApplicationViewModel()
+        public UnweightedGraphViewModel()
         {
             grid = new Grid(25, 25);
         }
@@ -36,6 +36,7 @@ namespace PathFinding
             }
 
             StartNode = node;
+            StartNode.IsStartNode = true;
         }
 
         private void DeselecStartNode()
@@ -43,6 +44,7 @@ namespace PathFinding
             if (StartNode != null)
             {
                 StartNode.Colour = defaultNodeColour;
+                StartNode.IsStartNode = false;
                 StartNode = null;
             }
         }
@@ -52,6 +54,7 @@ namespace PathFinding
             if (EndNode != null)
             {
                 EndNode.Colour = defaultNodeColour;
+                EndNode.IsEndNode = false;
                 EndNode = null;
             }
         }
@@ -64,6 +67,7 @@ namespace PathFinding
             }
 
             EndNode = node;
+            EndNode.IsStartNode = true;
         }
 
         public void ClearGrid()

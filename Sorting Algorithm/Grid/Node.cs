@@ -51,6 +51,10 @@ namespace PathFinding
 
         public Node WestNeightbour { get; private set; }
 
+        public bool IsStartNode { get; set;  }
+
+        public bool IsEndNode { get; set;  }
+
         public Node(int x, int y)
         {
             X = x;

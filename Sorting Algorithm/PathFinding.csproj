@@ -84,7 +84,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="ViewModels\ApplicationViewModel.cs" />
+    <Compile Include="ViewModels\UnweightedGraphViewModel.cs" />
     <Compile Include="Grid\Grid.cs" />
     <Compile Include="Windows\UnweightedGraphWindow.xaml.cs">
       <DependentUpon>UnweightedGraphWindow.xaml</DependentUpon>

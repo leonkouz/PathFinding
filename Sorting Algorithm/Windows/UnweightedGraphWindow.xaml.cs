@@ -30,7 +30,7 @@ namespace PathFinding
     /// </summary>
     public partial class UnweightedGraphWindow : Window
     {
-        private ApplicationViewModel viewModel = new ApplicationViewModel();
+        private UnweightedGraphViewModel viewModel = new UnweightedGraphViewModel();
 
         private bool isStartNodeSelecting = false;
         private bool isEndNodeSelecting = false;
@@ -127,6 +127,10 @@ namespace PathFinding
                 {
                     node.RemoveWall();
                 }
+                else if (node.IsEndNode || node.IsStartNode)
+                {
+                    return;
+                }
                 else
                 {
                     node.MakeWall();
@@ -153,7 +157,11 @@ namespace PathFinding
                 }
                 lastChangedNode = node;
 
-                if (!node.IsWall)
+                if(node.IsStartNode || node.IsEndNode)
+                {
+                    return;
+                }
+                else if (!node.IsWall)
                 {
                     node.MakeWall();
                 }
