@@ -112,14 +112,12 @@ namespace PathFinding
                 isEndNodeSelecting = false;
                 EnableInteractiveButtons();
                 viewModel.SelectEndNode(node);
-                node.Colour = Brushes.Red;
             }
             else if(isStartNodeSelecting == true)
             {
                 isStartNodeSelecting = false;
                 EnableInteractiveButtons();
                 viewModel.SelectStartNode(node);
-                node.Colour = Brushes.Green;
             }
             else
             {

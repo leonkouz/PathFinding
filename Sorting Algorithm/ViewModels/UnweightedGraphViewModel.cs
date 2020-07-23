@@ -37,6 +37,7 @@ namespace PathFinding
 
             StartNode = node;
             StartNode.IsStartNode = true;
+            StartNode.Colour = Brushes.Green;
         }
 
         private void DeselecStartNode()
@@ -68,6 +69,7 @@ namespace PathFinding
 
             EndNode = node;
             EndNode.IsStartNode = true;
+            EndNode.Colour = Brushes.Red;
         }
 
         public void ClearGrid()
